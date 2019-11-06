@@ -1,0 +1,16 @@
+include ":itunes"
+include ":di-scope"
+include ":di-module"
+include ":di-viewmodel"
+include ":ui-navigation"
+include ":ui-common"
+include ":ui-mvrx"
+include ":domain"
+include ":data"
+include ":data-local"
+include ":data-remote"
+include ":feature-tracks"
+include ":feature-track-detail"
+
+project(":feature-tracks").projectDir = new File("features/tracks")
+project(":feature-track-detail").projectDir = new File("features/track-detail")

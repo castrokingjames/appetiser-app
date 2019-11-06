@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="Theme.NoActionBar.Splash">
+        <item name="colorPrimaryDark">@color/violet</item>
+    </style>
+
+</resources>

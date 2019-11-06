@@ -1,0 +1,91 @@
+import au.com.appetiser.itunes.*
+
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-kapt"
+apply plugin: "kotlin-android-extensions"
+
+android {
+    compileSdkVersion Config.compile
+
+    defaultConfig {
+        applicationId = Config.applicationId
+        minSdkVersion Config.min
+        targetSdkVersion Config.target
+        versionCode = Config.versionCode
+        versionName = Config.versionName
+    }
+
+    signingConfigs {
+        release {
+            Properties properties = new Properties()
+            properties.load(new FileInputStream("local.properties"))
+            storeFile file(properties.getProperty("STORE_FILE"))
+            storePassword properties.getProperty("STORE_PASSWORD")
+            keyAlias properties.getProperty("KEY_ALIAS")
+            keyPassword properties.getProperty("KEY_PASSWORD")
+        }
+    }
+
+    buildTypes {
+        debug {
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+
+        release {
+            minifyEnabled = true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        pickFirst 'META-INF/kotlinx-io.kotlin_module'
+        pickFirst 'META-INF/atomicfu.kotlin_module'
+        pickFirst 'META-INF/kotlinx-coroutines-io.kotlin_module'
+    }
+    sourceSets {
+        main.java.srcDirs += "src/main/kotlin"
+        main.java.srcDirs += [file("$buildDir/generated/source/kapt/main")]
+        test.java.srcDirs += "src/test/kotlin"
+        androidTest.java.srcDirs += "src/androidTest/kotlin"
+    }
+}
+
+dependencies {
+    implementation project(":di-scope")
+    implementation project(":di-viewmodel")
+    implementation project(":di-module")
+    implementation project(":ui-navigation")
+    implementation project(":ui-mvrx")
+    implementation project(":ui-common")
+    implementation project(":domain")
+    implementation project(":data")
+    implementation project(":data-local")
+    implementation project(":data-remote")
+    implementation project(":feature-tracks")
+    implementation project(":feature-track-detail")
+
+    implementation Libs.AndroidX.Navigation.fragment
+    implementation Libs.AndroidX.Navigation.ui
+
+    implementation Libs.Airbnb.mvRx
+
+    implementation Libs.AndroidX.appcompat
+
+    implementation Libs.Dagger.dagger
+    implementation Libs.Dagger.android
+    implementation Libs.Dagger.androidSupport
+    implementation Libs.AssistedInject.annotationDagger2
+
+    implementation Libs.Facebook.stetho
+
+    kapt Libs.Dagger.compiler
+    kapt Libs.Dagger.androidProcessor
+    kapt Libs.AssistedInject.processorDagger2
+}

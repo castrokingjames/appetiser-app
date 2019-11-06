@@ -1,0 +1,9 @@
+<resources>
+    <string name="fair">Fair</string>
+    <string name="scan">Scan</string>
+    <string name="fs">fs</string>
+    <string name="copyright">Ⓒ FairScan 2019</string>
+    <string name="website">www.fairscan.com.au</string>
+    <string name="next">Next</string>
+    <string name="version">v1.0</string>
+</resources>
